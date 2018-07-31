@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rolat</artifactId>
+        <groupId>rolat</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>rolat_service</artifactId>
+
+    <dependencies>
+
+
+        <!-- https://mvnrepository.com/artifact/com.syncthemall/boilerpipe -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-testkit_2.11</artifactId>
+            <version>2.5.13</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-contrib -->
+     <!--   <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-contrib_2.11</artifactId>
+            <version>2.5.13</version>
+            <scope>test</scope>
+        </dependency>-->
+
+
+
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-cluster_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster-metrics -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-cluster-metrics_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-cluster-tools -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-cluster-tools_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-remote -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-remote_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.11.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+            <version>2.11.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
+            <version>2.11.7</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-slf4j -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-slf4j_2.11</artifactId>
+            <version>2.5.13</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <!--<dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        &lt;!&ndash; https://mvnrepository.com/artifact/ch.qos.logback/logback-core &ndash;&gt;
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>-->
+
+
+    </dependencies>
+
+
+<!--
+
+cd
+-->
+
+    <build>
+        <!--scala待编译的文件目录-->
+        <!--<sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>-->
+        <!--scala插件-->
+        <plugins>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.2.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <args>
+                                <!--<arg>-make:transitive</arg>--><!--scala2.11 netbean不支持这个参数-->
+                                <arg>-dependencyfile</arg>
+                                <arg>${project.build.directory}/.scala_dependencies</arg>
+                            </args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--manven打包插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <!--
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>reference.conf</resource>
+                                </transformer>
+                                -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>rolat.scala.cluster.factorial.FactorialApp
+                                    </mainClass> <!--main方法-->
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+
+</project>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="akka_test" />
+        <module name="akkatest" />
+        <module name="rolat_persistent" />
+        <module name="rolat_service" />
+        <module name="rolat_test" />
+        <module name="rolat_utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="akka_test" target="1.8" />
+      <module name="akkatest" target="1.8" />
+      <module name="rolat" target="1.8" />
+      <module name="rolat_entity" target="1.8" />
+      <module name="rolat_persistent" target="1.8" />
+      <module name="rolat_service" target="1.8" />
+      <module name="rolat_test" target="1.8" />
+      <module name="rolat_utils" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

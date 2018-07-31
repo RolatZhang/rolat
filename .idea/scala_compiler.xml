@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <profile name="Maven 1" modules="rolat_service">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="D:\soft\IDEA\workspace\rolat\rolat_service\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 2" modules="rolat_test">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="D:\soft\IDEA\workspace\rolat\rolat_test\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 3" modules="akkatest">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="D:\soft\IDEA\workspace\rolat\akkatest\target/.scala_dependencies" />
+      </parameters>
+    </profile>
+    <profile name="Maven 4" modules="akka_test" />
+  </component>
+</project>
