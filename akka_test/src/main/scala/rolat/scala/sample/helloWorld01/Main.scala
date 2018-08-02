@@ -1,24 +1,26 @@
 package rolat.scala.sample.helloWorld01
 
-import akka.Main.Terminator
-import akka.actor.{Actor, ActorSystem, ExtendedActorSystem, Props}
-
-import scala.util.control.NonFatal
+import akka.actor.ActorSystem
+import akka.actor.Props
+import akka.actor.ActorRef
+import akka.actor.Actor
+import akka.actor.ActorLogging
+import akka.actor.Terminated
 
 object Main {
 
   def main(args: Array[String]): Unit = {
-    println(classOf[HelloWorld].getName)
-   /* akka.Main.main(Array(classOf[HelloWorld].getName))*/
+    val system = ActorSystem("Hello")
+    val a = system.actorOf(Props[HelloWorld], "helloWorld")
+    system.actorOf(Props(classOf[Terminator], a), "terminator")
+  }
 
-    val system = ActorSystem("Main")
-    try {
-      val appClass = system.asInstanceOf[ExtendedActorSystem].dynamicAccess.getClassFor[Actor](classOf[HelloWorld].getName).get
-      println(appClass)
-      val app = system.actorOf(Props(new HelloWorld()), "app")
-      val terminator = system.actorOf(Props(classOf[Terminator], app), "app-terminator")
-    } catch {
-      case NonFatal(e) ⇒ system.terminate(); throw e
+  class Terminator(ref: ActorRef) extends Actor with ActorLogging {
+    context watch ref
+    def receive = {
+      case Terminated(_) =>
+        log.info("{} has terminated, shutting down system", ref.path)
+        context.system.terminate()
     }
   }
 
