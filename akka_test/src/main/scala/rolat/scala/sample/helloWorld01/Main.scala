@@ -1,4 +1,4 @@
-package rolat.scala.sample.camel
+package rolat.scala.sample.helloWorld01
 
 import akka.Main.Terminator
 import akka.actor.{Actor, ActorSystem, ExtendedActorSystem, Props}
@@ -15,7 +15,7 @@ object Main {
     try {
       val appClass = system.asInstanceOf[ExtendedActorSystem].dynamicAccess.getClassFor[Actor](classOf[HelloWorld].getName).get
       println(appClass)
-      val app = system.actorOf(Props(appClass), "app")
+      val app = system.actorOf(Props(new HelloWorld()), "app")
       val terminator = system.actorOf(Props(classOf[Terminator], app), "app-terminator")
     } catch {
       case NonFatal(e) ⇒ system.terminate(); throw e

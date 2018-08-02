@@ -1,4 +1,4 @@
-package rolat.scala.sample.camel
+package rolat.scala.sample.helloWorld01
 
 import akka.actor.Actor
 import akka.actor.Props
