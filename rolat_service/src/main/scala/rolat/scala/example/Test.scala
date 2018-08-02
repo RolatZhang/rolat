@@ -1,4 +1,4 @@
-/*
+
 package rolat.scala.example
 
 import java.util.concurrent.atomic.AtomicInteger
@@ -10,11 +10,11 @@ object Test extends App {
      println(a+"||"+x)
    })
 
-  val hello = new Thread()(new Runnable {
+  val hello = new Thread(new Runnable {
     override def run(): Unit ={
       println("hello world")
     }
   })
 
 }
-*/
+

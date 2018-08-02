@@ -19,6 +19,11 @@
         <parameter value="D:\soft\IDEA\workspace\rolat\akkatest\target/.scala_dependencies" />
       </parameters>
     </profile>
-    <profile name="Maven 4" modules="akka_test" />
+    <profile name="Maven 4" modules="akka_test,akka-test">
+      <parameters>
+        <parameter value="-dependencyfile" />
+        <parameter value="D:\soft\IDEA\workspace\rolat\akka_test\target/.scala_dependencies" />
+      </parameters>
+    </profile>
   </component>
 </project>
