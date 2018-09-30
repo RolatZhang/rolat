@@ -8,7 +8,9 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/akka_test/pom.xml" />
         <option value="$PROJECT_DIR$/rolat_entity/pom.xml" />
+        <option value="$PROJECT_DIR$/rolat_test/pom.xml" />
       </set>
     </option>
   </component>

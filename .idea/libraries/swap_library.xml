@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="swap-library">
+    <CLASSES>
+      <root url="file://D:/sms_library/library/swap-library" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/sms_library/library/swap-library" recursive="false" />
+  </library>
+</component>

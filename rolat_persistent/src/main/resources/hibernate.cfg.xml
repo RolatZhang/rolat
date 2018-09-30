@@ -1,0 +1,433 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<!--<property name="connection.username">TMR</property>
+        <property name="connection.url">
+            jdbc:dm://192.168.202.123:5236/TMR
+        </property>
+
+        <property name="connection.password">tmr</property>
+        <property name="connection.driver_class">
+            dm.jdbc.driver.DmDriver
+        </property>
+        <property name="dialect">org.hibernate.dialect.DmDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.jdbc.use_get_generated_keys">
+            false
+        </property>-->
+		<property name="dialect">org.hibernate.dialect.DmDialect</property>
+		<property name="hibernate.connection.autocommit">true</property>
+		<property name="hibernate.show_sql">true</property>
+		<mapping resource="com/sgcc/sgd5000/domain/Basevalue.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/domain/Basevoltage.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/domain/Company.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/domain/Loadtype.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/domain/Taptype.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Aclinesegment.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Bay.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Breaker.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Busbarsection.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/CompensatorP.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/CompensatorS.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Disconnector.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Generatingunit.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/core/Grounddisconnector.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Powertransformer.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Measure.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Rectifierinverter.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Subcontrolarea.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Substation.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/core/Transformerwinding.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Voltagelevel.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/Dclinesegment.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/DeviceView.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/core/SearchView.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/line/Acline.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/line/Aclineend.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/line/Dcgroundterm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/line/Dclineend.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/line/Dcsystem.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/load/Energyconsumer.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/load/Loadarea.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogBase.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogProtocol.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogComm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogTask.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogDao.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogStatis.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogPreinsert.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogCompute.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogWeb.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogLifeCycle.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/topo/Island.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/topo/Singleterm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/topo/Toponode.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/AcquireGroups.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/AcquireLogs.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/AcquireTasks.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/Acquireds.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/Ddns.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/Dials.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/Networks.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/Protocols.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/TaskItems.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/acquired/TerminalServers.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/CommParams.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/CommCenters.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/CommConfig.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/acquired/CommFlow.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/acquired/ProtocolParams.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/acquired/AcquireCodecAcq.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/acquired/ProtocolLibrary.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/balance/AcLineLoss.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/balance/DcLineLoss.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/balance/BusbarsectionLoss.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/balance/SubstationBalance.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/balance/TransformerLoss.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Ertus.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Gateways.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/meas/InstantaneousValues.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Manufactures.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Measurements.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Meters.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/MeterTimeTag.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/ReadingTimeTag.hbm.xml" />
+
+		<mapping resource="com/sgcc/sgd5000/meas/Models.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/Pulses.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/ReactivePulses.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/tariff/Periods.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/tariff/TariffItems.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/tariff/Tariffs.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisMeasAcq.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisProfileAcq.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/hisdata/HisRpProfileAcq.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/config/PulseReplace.hbm.xml"/>
+
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisRpViewAcq.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisTariffAcq.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisViewAcq.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HisMeter.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/hisdata/HisComputeFormula.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/hisdata/HisComputeComponent.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/daydata/DayTariffProfile.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/daydata/DayTariffView.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/daydata/DayDemand.hbm.xml" />
+
+		<mapping resource="com/sgcc/sgd5000/event/ErtuEvent.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/MeterEvent.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/EventTypeParam.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/event/UserEventSubscribe.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/HomepageDefine.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/system/HomepageDefineItem.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/GridDefine.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/GridDefineItem.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/CurveDefine.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/CurveDefineItem.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/system/LayoutTemplateDefine.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/system/LayoutTemplateItem.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/system/SampleEventType.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/AcLineLossEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/AutoPldEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/BasevalueErrorEventAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/SampleEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/FactoryBalanceEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/MeterStatusEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ManualPldEventAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/ModifyEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/StatisOverflowEventAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/YcEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ComputeLimitEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/PulseSmoothEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/RpLimitEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ReprocessEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/DatabaseSpaceEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/MeterMvEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/TransformerLossEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/TranslateEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ParamChangeEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ReplaceEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/StatisErrorEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/PulseLimitEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/ComputerEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/LostDataEventAlarm.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/alarm/IntervalLostEventAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/Processes.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/ComputeComponent.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/statis/ComputeFormula.hbm.xml" />
+
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisDayTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisMonthTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisYearTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisTendaysTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisWeekTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisSeasonTariffEnergy.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisManualRestatis.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/statis/MeterDataChange.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StatisDataChange.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/FormulaDataChange.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/statis/DummyDataChange.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/EnergyDataChange.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisMonthCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisDayCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisYearCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisTendaysCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisWeekCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisSeasonCompute.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/formula/HisComputeView.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisDayTariffCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisMonthTariffCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisSeasonTariffCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisTendaysTariffCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisWeekTariffCompute.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/formula/StatisYearTariffCompute.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/MeterConfigItem.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/Companys.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/Department.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/PrivRule.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/RoleFuncRelation.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/RoleUserRelation.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/SystemFunc.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/UserPrivRelation.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/UserRole.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/ViewDefine.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/Users.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SysdictBasicobject.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SysdictBasicproperty.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SysdictDataset.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SysdictDatatype.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SysdictTablespace.hbm.xml" />
+		<mapping resource="com/dlptech/swap/database/system/Hosts.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/ServiceRunningStatus.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/SystemParam.hbm.xml" />
+		<mapping resource="com/dlptech/swap/database/system/Menu.hbm.xml" />
+
+		<mapping
+				resource="com/sgcc/sgd5000/event/AquiredStatusConfig.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/CommStatusConfig.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/event/MeterStatusConfig.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/ErtuStatusConfig.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/system/ServiceInformation.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/inter/InterfaceConfig.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/inter/InterfaceParam.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/inter/InterfaceSrc.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/log/LogInterface.hbm.xml" />
+
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/ConstantReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/CtptChangedEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/EmsDataReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/HisIntervalReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/IvDataReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/LinearReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/MergeIntervalReplaceEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/MeterChangedEventLogs.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/eventlogs/MeterDataReplaceEventLogs.hbm.xml" />
+
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/ConstantReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/EmsDataReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/HisIntervalReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/IvDataReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/LinearReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/MergeIntervalReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/estimate/MeterDataReplaceEstimate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/event/ChangeCtptProcess.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/ReplaceProcess.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/event/ChangeMeterProcess.hbm.xml" />
+		<mapping
+				resource="com/dlptech/swap/database/resource/UserTasks.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/report/Report.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/report/ReportDefine.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/meas/FilterMeters.hbm.xml" />
+
+		<mapping
+				resource="com/sgcc/sgd5000/inter/InterfaceTransfer.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/log/DaydataTransferRecord.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/log/IntervaldataTransferReord.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/DaydataTransferStatis.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/IntervaldataTransferStatis.hbm.xml" />
+
+
+		<mapping resource="com/sgcc/sgd5000/system/Subsystem.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/AcquireSuccessRate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StationCompleteDetail.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StationIntactRatio.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/statis/CommSuccessRate.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/StationCompleteRatio.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/AreaCompleteDetail.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/statis/AreaCompleteRatio.hbm.xml" />
+
+
+		<mapping
+				resource="com/sgcc/sgd5000/log/AcquiredParamChanged.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/host/HostInfo.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/host/DiskInfo.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/host/ServiceInfo.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/host/HostNetworks.hbm.xml" />
+
+		<mapping resource="com/sgcc/sgd5000/hisdata/DiskHisStatus.hbm.xml" />
+		<mapping
+				resource="com/sgcc/sgd5000/hisdata/ServiceHisStatus.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/HostHisStatus.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/NetHisStatus.hbm.xml" />
+
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterMvCheckAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterMvCheckTime.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterEmsCheckAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterEmsCheckTime.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/exception/ExceptionDefine.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/monitor/ChannelStatusMonitor.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/hisdata/ChannelStatusData.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/monitor/ChannelUnusableInfo.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/monitor/DayChannelUnusableStatis.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/monitor/MonthChannelUnusableStatis.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/statis/StatisDayEmsEnergy.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/exception/ExceptionStatis.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterSvCheckAlarm.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/alarm/MeterSvCheckTime.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/config/PldConfig.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/config/PldConfigItem.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/event/AutoPldEvent.hbm.xml" />
+
+
+		<mapping resource="com/sgcc/sgd5000/outer/SubstationOuter.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/outer/MeterOuter.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/outer/MeterOuterRelation.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/config/FormulaPlanRelation.hbm.xml"/>
+
+		<mapping resource="com/sgcc/sgd5000/config/ReplaceRelation.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/config/ReplaceTemplate.hbm.xml"/>
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidAcline.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidAclineend.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidAclinesegment.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidBasevoltage.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidBay.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidBreaker.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidBusbarsection.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidCompensatorP.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidCompensatorS.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidDisconnector.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidEnergyconsumer.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidPowertransformer.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidSubcontrolarea.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidSubstation.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidTransformerwinding.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidVoltagelevel.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/midmodel/MidGeneratingunit.hbm.xml" />
+		<mapping resource="com/sgcc/sgd5000/statis/StatisMeterDataStatus.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

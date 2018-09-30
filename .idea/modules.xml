@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/akka_test/akka_test.iml" filepath="$PROJECT_DIR$/akka_test/akka_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rolat.iml" filepath="$PROJECT_DIR$/rolat.iml" />
       <module fileurl="file://$PROJECT_DIR$/rolat_persistent/rolat_persistent.iml" filepath="$PROJECT_DIR$/rolat_persistent/rolat_persistent.iml" />
       <module fileurl="file://$PROJECT_DIR$/rolat_service/rolat_service.iml" filepath="$PROJECT_DIR$/rolat_service/rolat_service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rolat_test/rolat_test.iml" filepath="$PROJECT_DIR$/rolat_test/rolat_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rolat_utils/rolat_utils.iml" filepath="$PROJECT_DIR$/rolat_utils/rolat_utils.iml" />
     </modules>
   </component>

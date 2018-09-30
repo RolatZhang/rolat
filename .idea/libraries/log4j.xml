@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="log4j">
+    <CLASSES>
+      <root url="jar://D:/sms_library/library/log-library/log4j.jar!/" />
+      <root url="jar://D:/sms_library/library/log-library/logger-manager.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: rolat-common:commons-pool:0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/commons-pool/0/commons-pool-0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/commons-pool/0/commons-pool-0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/commons-pool/0/commons-pool-0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

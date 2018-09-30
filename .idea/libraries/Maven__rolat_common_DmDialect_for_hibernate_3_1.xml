@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: rolat-common:DmDialect-for-hibernate:3.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/DmDialect-for-hibernate/3.1/DmDialect-for-hibernate-3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/DmDialect-for-hibernate/3.1/DmDialect-for-hibernate-3.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/rolat-common/DmDialect-for-hibernate/3.1/DmDialect-for-hibernate-3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
