@@ -21,8 +21,8 @@
 		false
 	</property>-->
 	<property name="dialect">org.hibernate.dialect.DmDialect</property>
-	<property name="hibernate.connection.autocommit">true</property>
-	<property name="hibernate.show_sql">true</property>
+	<property name="hibernate.connection.autocommit">false</property>
+	<property name="hibernate.show_sql">false</property>
 	<mapping resource="com/sgcc/sgd5000/domain/Basevalue.hbm.xml" />
 	<mapping resource="com/sgcc/sgd5000/domain/Basevoltage.hbm.xml" />
 	<mapping resource="com/sgcc/sgd5000/domain/Company.hbm.xml" />

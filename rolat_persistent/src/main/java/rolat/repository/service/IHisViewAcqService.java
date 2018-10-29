@@ -15,5 +15,5 @@ public interface IHisViewAcqService {
     List<HisViewAcq> getHisViewAcqList(Timestamp startTime,Timestamp endTime,Meters meters);
     List<HisViewAcq> getHisViewAcqListByMeters(Meters meters);
 
-    int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,boolean updateTime,Meters meters,MeterTimeTag meterTimeTag);
+    int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,Meters meters);
 }

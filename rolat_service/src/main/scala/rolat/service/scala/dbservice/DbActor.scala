@@ -11,7 +11,7 @@ import com.sgcc.sgd5000.constants.EMeterDataItem
 import com.sgcc.sgd5000.hisdata.HisViewAcq
 import com.sgcc.sgd5000.meas.{MeterTimeTag, Meters, ReadingTimeTag}
 import com.typesafe.config.ConfigFactory
-import org.slf4j.LoggerFactory
+import org.apache.commons.logging.LogFactory
 import org.springframework.context.support.ClassPathXmlApplicationContext
 import rolat.repository.controller.ServiceHolder
 import rolat.repository.utils.BeansUtils
@@ -26,7 +26,7 @@ import scala.collection.mutable
   */
 class DbActor(serviceHolder: ServiceHolder) extends Actor{
 
-  val log=LoggerFactory.getLogger(classOf[DbActor])
+  val log=LogFactory.getLog(classOf[DbActor])
 
   val classCacheMap:mutable.Map[String, Any]=mutable.Map()
 
@@ -36,7 +36,6 @@ class DbActor(serviceHolder: ServiceHolder) extends Actor{
 
   override def receive: Receive = {
     case requestMsg:RequestMsg =>{
-      println("收到消息"+requestMsg)
       requestMsg.id match {
         case "getHisViewAcqList" =>{
           val meters=requestMsg.request.get("meters").get.asInstanceOf[Meters]
@@ -44,10 +43,14 @@ class DbActor(serviceHolder: ServiceHolder) extends Actor{
           val readingTimeTag=requestMsg.request.get("readingTimeTag").get.asInstanceOf[ReadingTimeTag]
           val updateTime=requestMsg.request.get("updateTime").get
           val meterConfigItem=serviceHolder.metersService.getMeterConfigItem(meters,EMeterDataItem.TOU.getValue)
-          val hisViewAcqList=serviceHolder.hisViewAcqService.getHisViewAcqList(meterTimeTag.getClass1TimeTag
+          val meterConfigItemProfile=serviceHolder.metersService.getMeterConfigItem(meters,EMeterDataItem.PROFILE.getValue)
+          val period=meterConfigItem.getIntegerationPeriod
+          val hisViewAcqList=serviceHolder.hisViewAcqService.getHisViewAcqList(
+            new Timestamp(meterTimeTag.getClass1TimeTag.getTime-period*1000)
             ,readingTimeTag.getClass2TimeTag,meters)
-          val map=Map[String,Any]("responseType"->1,"hisViewAcqList"->hisViewAcqList,
-            "meterConfigItem"->meterConfigItem,"updateTime"->updateTime)
+          val map=Map[String,Any]("responseType"->1,"hisViewAcqList"->hisViewAcqList,"meters"->meters,
+            "meterConfigItem"->meterConfigItem,"meterConfigItemProfile"->meterConfigItemProfile,
+            "updateTime"->updateTime,"meterTimeTag"->meterTimeTag,"readingTimeTag"->readingTimeTag)
           sender() ! ResponseMsg(requestMsg.id,map)
 
         }
@@ -57,17 +60,15 @@ class DbActor(serviceHolder: ServiceHolder) extends Actor{
     case responseMsg:ResponseMsg =>{
       responseMsg.id match {
         case "saveHisViewAcqList" =>{
+          log.info(s"${self}+保存saveHisViewAcqList")
           val hisViewAcqList=responseMsg.response.get("hisViewAcqList").get.asInstanceOf[List[HisViewAcq]]
-          val updateTime=responseMsg.response.get("updateTime").get
-          log.info("是否刷新"+updateTime)
-          for (hisViewAcq <- hisViewAcqList.asScala ) {
-            log.info(hisViewAcq.getId.getMeterId+"|"+hisViewAcq.getId.getOccurTime+"|"+hisViewAcq.getPapValue)
-          }
-//          serviceHolder.hisViewAcqService.updateHisViewAcqList(hisViewAcqList,)
+          val meterTimeTag: MeterTimeTag=responseMsg.response.get("meterTimeTag").get.asInstanceOf[MeterTimeTag]
+          val meters=responseMsg.response.get("meters").get.asInstanceOf[Meters]
+          serviceHolder.hisViewAcqService.updateHisViewAcqList(hisViewAcqList,false,meters,meterTimeTag)
         }
       }
     }
-    case msg@_=> println("未知消息"+msg)
+    case msg@_=> log.info("未知消息"+msg)
   }
 
   def parse(requestMsg:RequestMsg): Unit ={
@@ -102,7 +103,7 @@ class DbActor(serviceHolder: ServiceHolder) extends Actor{
 
           sender() ! ResponseMsg(requestMsg.id, meterList)
 //                 sender() ! ResponseMsg(requestMsg.id,getMetersList)
-        case _ => println("未知消息" + _)
+        case _ => log.info("未知消息" + _)
       }*/
     }
     }
@@ -148,7 +149,7 @@ class DbActor(serviceHolder: ServiceHolder) extends Actor{
 }
 
 object DbActor {
-
+  val log=LogFactory.getLog(classOf[DbActor])
   val prop: Properties = new Properties
   val inputStream = DbActor.getClass.getClassLoader.getResourceAsStream("init.properties")
   prop.load(inputStream)
@@ -161,7 +162,7 @@ object DbActor {
       .withFallback(ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port"))
       .withFallback(ConfigFactory.load())
     val calcSystem = ActorSystem("calcClusterSystem", config)
-    println("启动数据库服务" + port)
+    log.info("启动数据库服务" + port)
     val springContext = new ClassPathXmlApplicationContext("./applicationContext.xml")
     SpringUtils.installApplicationContext(springContext)
     val serviceHolder = springContext.getBean("serviceHolder").asInstanceOf[ServiceHolder]
@@ -172,7 +173,7 @@ object DbActor {
     val monitorFlag=prop.getProperty("monitor.service")
     monitorFlag match {
       case "true" => calcSystem.actorOf(Props[MetricsListener], name = "metricsListener")
-      case msg@_ => println(msg)
+      case msg@_ => log.info("是否启动指标监视==》"+msg)
     }
   }
 }

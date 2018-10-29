@@ -3,27 +3,28 @@ package rolat.repository.dao;
 import com.sgcc.sgd5000.hisdata.HisViewAcq;
 import com.sgcc.sgd5000.meas.Meters;
 import net.njcp.service.util.CommFunc;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.List;
 
 @Repository
 public class HisViewAcqDao extends BaseDao {
 
+    private Log log= LogFactory.getLog(HisViewAcqDao.class);
+
     public List<HisViewAcq> getHisViewAcqList(Timestamp startTime, Timestamp endTime, Meters meters,String tableName) {
-        String sql="select * from "+tableName+" where METER_ID=? and OCCUR_TIME>=? and OCCUR_TIME<=?";
+        String sql="select * from "+tableName+" where METER_ID=? and OCCUR_TIME>=? and OCCUR_TIME<=? order by OCCUR_TIME";
         return (List<HisViewAcq>) dao.executeDynamicSQLQuery(sql,HisViewAcq.class,new Object[]{meters.getMeterId(),startTime,endTime});
     }
 
-    public int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,String tableName){
-        dao.getHibernateTemplate().execute(new UpdateHisViewAcqAction(hisViewAcqList));
+    public int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,String tableName,Long meterId){
+        dao.getHibernateTemplate().execute(new UpdateHisViewAcqAction(hisViewAcqList,tableName, meterId));
         return 0;
     }
 
@@ -35,57 +36,33 @@ public class HisViewAcqDao extends BaseDao {
      */
     private class UpdateHisViewAcqAction implements HibernateCallback {
         private List<HisViewAcq> hisViewAcqList;
+        private String tableName;
+        private Long meterId;
 
-        public UpdateHisViewAcqAction(List<HisViewAcq> hisViewAcqList ) {
+        public UpdateHisViewAcqAction(List<HisViewAcq> hisViewAcqList,String tableName,Long meterId) {
             this.hisViewAcqList = hisViewAcqList;
+            this.tableName=tableName;
+            this.meterId=meterId;
         }
 
         @Override
         public Object doInHibernate(Session session) throws HibernateException, SQLException {
 
-          /*  Connection conn = session.connection();
+            Connection conn = session.connection();
             PreparedStatement pstmt = null;
-            Timestamp timeForTableName = null;
             int batchSize = 1000;
             try {
                 if ( conn != null ) {
-                    // pstmt = conn.createStatement();
-                    for ( int i = 0; i < this.hisViewAcqList.size(); i++ ) {
-                        HisViewAcq view = this.hisViewAcqList.get(i);
-                        if ( view == null ) {
-                            continue;
-                        }
-                        timeForTableName = view.getId().getOccurTime();
-                        if ( timeForTableName != null )
-                            break;
-                    }
-                    if ( timeForTableName != null ) {
-                        String tableName = CommFunc.getHisTableName(this.meter.getAcquiredId(), timeForTableName,
-                                HisViewAcq.class);
                         String updateSql = "update " + tableName
                                 + " set pap_value=?,pap_status=?,rap_value=?,rap_status=?,"
                                 + "prp_value=?,prp_status=?,rrp_value=?,rrp_status=?" + " where meter_id="
-                                + this.meter.getId() + " and occur_time=?";
+                                + this.meterId + " and occur_time=?";
+                    log.info(meterId+"执行sql||"+updateSql);
                         pstmt = conn.prepareStatement(updateSql);
-                        for ( int i = 0; i < this.viewList.size(); i++ ) {
-                            HisViewAcq view = this.viewList.get(i);
-                            if ( view == null ) {
-                                continue;
-                            }
+                        for ( int i = 0; i < this.hisViewAcqList.size(); i++ ) {
+                            HisViewAcq view = this.hisViewAcqList.get(i);
                             Timestamp occurTime = view.getId().getOccurTime();
                             boolean flag=false;
-                            if(dataLockConfigList!=null){//跳过在配置时间内
-                                for (DataLockConfig dataLockConfig : dataLockConfigList) {
-                                    Long startLong=dataLockConfig.getId().getStartDate().getTime();
-                                    Long endLong=dataLockConfig.getEndDate().getTime();
-                                    if(occurTime.getTime()>=startLong&&occurTime.getTime()<=endLong){
-                                        flag=true;
-                                        break;
-                                    }
-                                }
-                            }
-                            if(flag)
-                                continue;
                             if ( view.getPapValue() != null )
                                 pstmt.setDouble(1, view.getPapValue());
                             else
@@ -123,20 +100,19 @@ public class HisViewAcqDao extends BaseDao {
                             else
                                 pstmt.setNull(9, Types.TIMESTAMP);
                             pstmt.addBatch();
-                            if ( (i != 0 && i % batchSize == batchSize - 1) || i == this.viewList.size() - 1 ) {
+                            if ( (i != 0 && i % batchSize == 0) || i == this.hisViewAcqList.size() - 1 ) {
                                 try {
                                     pstmt.executeBatch();
                                     pstmt.clearBatch();
                                 } catch ( Exception ex ) {
-                                    Alarm.error("error sql is: " + updateSql);
-                                    Alarm.error(ex, ex);
+                                    log.error(ex, ex);
                                 }
                             }
                         }
-                    }
+                        return 1;
                 }
             } catch ( Exception e ) {
-                Alarm.error(e, e);
+                log.error(e, e);
             } finally {
                 try {
                     if ( pstmt != null )
@@ -144,10 +120,10 @@ public class HisViewAcqDao extends BaseDao {
                     if ( conn != null )
                         conn.close();
                 } catch ( Exception ex ) {
-                    Alarm.error(ex, ex);
+                    log.error(ex, ex);
                 }
-            }*/
-            return null;
+            }
+            return 0;
         }
     }
 }

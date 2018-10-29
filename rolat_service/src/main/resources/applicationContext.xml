@@ -13,13 +13,10 @@
 	<context:component-scan base-package="rolat.repository" />
 	<context:component-scan base-package="rolat.scala.message" />
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
-		<!--驱动的名称我用的mysql 所以配置的mysql的驱动名称  -->
-		<property name="url" value="jdbc:dm://10.22.11.10:5236/TMR" />
+		<property name="url" value="jdbc:dm://192.168.202.123:5236/TMR" />
 		<property name="driverClassName" value="dm.jdbc.driver.DmDriver" />
-		<!--数据库用户名名称  -->
 		<property name="username" value="TMR" />
-		<!--数据库的密码 我本地的密码空 所以不用配置  -->
-		<property name="password" value="TMR" />
+		<property name="password" value="tmr" />
 		<!--  数据库连接池启动时创建的连接数量 我设置的是10个-->
 		<property name="initialSize" value="10" />
 		<!-- 池里不会被释放的最多空闲连接数量。设置为0时表示无限制。 -->

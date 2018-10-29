@@ -60,7 +60,7 @@ public class HisViewAcqServiceImpl implements IHisViewAcqService {
 
     @Override
     @Transactional
-    public int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,boolean updateTime,Meters meters,MeterTimeTag meterTimeTag) {
+    public int updateHisViewAcqList(List<HisViewAcq> hisViewAcqList,Meters meters) {
         int result=0;
         Set<Integer> tableNameSet=new HashSet<Integer>();
         for (HisViewAcq hisViewAcq : hisViewAcqList) {
@@ -69,12 +69,8 @@ public class HisViewAcqServiceImpl implements IHisViewAcqService {
         }
         for (Integer year : tableNameSet) {
             String tableName = CommFunc.getHisTableName(meters.getAcquiredId(), year, ETaskItem.VIEW);
-            result+=hisViewAcqDao.updateHisViewAcqList(hisViewAcqList,tableName);
+            result+=hisViewAcqDao.updateHisViewAcqList(hisViewAcqList,tableName,meters.getMeterId());
         }
-        if(updateTime){
-            timeTagDao.updateMeterTimeTag(meterTimeTag);
-        }
-
       return result;
     }
 

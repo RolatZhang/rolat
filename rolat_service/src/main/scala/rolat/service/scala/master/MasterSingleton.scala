@@ -8,6 +8,7 @@ import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerS
 import akka.routing.FromConfig
 import com.sgcc.sgd5000.meas.{MeterTimeTag, Meters, ReadingTimeTag}
 import com.typesafe.config.ConfigFactory
+import org.apache.commons.logging.LogFactory
 import rolat.service.scala.backend.{MetricsListener, RouterBackend}
 import rolat.service.scala.message.Messages.{RequestMsg, ResponseMsg, Result}
 import rolat.service.scala.utils.MessageUtils
@@ -21,10 +22,12 @@ import scala.concurrent.duration._
   * 接收后端处理的任务结果保存到数据库
   */
 class MasterSingleton(delay: Int,period: Int) extends Actor {
+
+  val log=LogFactory.getLog(classOf[MasterSingleton])
   import context.dispatcher
 
   val routerBackend = context.actorOf(RouterBackend.props(),"adaptive")
-  val tickTask=context.system.scheduler.scheduleOnce(period.seconds , self, "sendJobs")
+  val tickTask=context.system.scheduler.schedule(delay.seconds,period.seconds , self, "sendJobs")
   val dbActorRouter = context.actorOf(FromConfig.props(Props.empty),name = "dbActorRouter")
 
   val readingTimeTagMap:mutable.Map[java.lang.Long,ReadingTimeTag]=mutable.Map()
@@ -35,7 +38,7 @@ class MasterSingleton(delay: Int,period: Int) extends Actor {
 
 
   override def receive: Receive = {
-    case "sendJobs" => println("sendJobs")
+    case "sendJobs" => log.info("sendJobs")
       dbActorRouter ! RequestMsg("getReadingTimeTagList",
         MessageUtils.createRequestMsg(1,"rolat.repository.service.IMetersService","metersService","getReadingTimeTagList"))
       dbActorRouter ! RequestMsg("getMeterTimeTagList",
@@ -57,7 +60,7 @@ class MasterSingleton(delay: Int,period: Int) extends Actor {
           processMeterTimeTag(meterTimeTagList)
         }
       }
-    case result: Result => println(result.code+"||"+result.context+"耗时"+(result.proceeTime/1000-startTime/1000))
+    case result: Result => log.info(result.code+"||"+result.context+"耗时"+(result.proceeTime/1000-startTime/1000))
     case _ => sender() ! "未知道"
   }
  /* override def postRestart(reason: Throwable): Unit = ()*///保证preStart只执行一次
@@ -83,7 +86,6 @@ class MasterSingleton(delay: Int,period: Int) extends Actor {
 
   def processMetersList(metersList: util.List[Meters]): Unit = {
     for (meters <- metersList.asScala) {
-      println(meters.getMeterName)
       val meterId=meters.getMeterId
       val status=meterStatusMap.get(meterId).getOrElse(0)
       if(status!=1){
@@ -92,8 +94,8 @@ class MasterSingleton(delay: Int,period: Int) extends Actor {
         if(readingTimeTag!=None&&meterTimeTag!=None){
           val endTime=readingTimeTag.get.getClass2TimeTag
           val startTime=meterTimeTag.get.getClass1TimeTag
-          println(startTime+"}}"+endTime)
-          if(startTime!=null&&endTime!=null&&endTime.getTime>startTime.getTime+300001){//大于1个周期才做
+          if(startTime!=null&&endTime!=null&&endTime.getTime>startTime.getTime){
+            log.info("开始处理==>["+meters.getMeterId+"/"+meters.getMeterName+"]"+startTime+"=>"+endTime)
           val map=Map[String,Any]("requestType"->1,"meters"->meters,
             "meterTimeTag"->meterTimeTag.get,"readingTimeTag"->readingTimeTag.get,"updateTime"->true)
             routerBackend ! RequestMsg("processHisViewAcq",map)
@@ -107,25 +109,26 @@ class MasterSingleton(delay: Int,period: Int) extends Actor {
 }
 
 object MasterSingleton{
+  val log=LogFactory.getLog(classOf[MasterSingleton])
 
   val prop: Properties = new Properties
   val inputStream = MasterSingleton.getClass.getClassLoader.getResourceAsStream("init.properties")
   prop.load(inputStream)
-  val delay =prop.getProperty("master.period")
-  val provied =prop.getProperty("master.period")
+  val delay =prop.getProperty("master.delay")
+  val period =prop.getProperty("master.period")
 
 
 
-  def propsRouterFrontend = Props(new MasterSingleton(delay.toInt,provied.toInt))
+  def propsRouterFrontend = Props(new MasterSingleton(delay.toInt,period.toInt))
 
   def create(port: Int) = {
     val config = ConfigFactory.parseString("akka.cluster.roles = [routerFrontend]")
       .withFallback(ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port"))
       .withFallback(ConfigFactory.load("adaptive"))
     val calcSystem = ActorSystem("calcClusterSystem",config)
-    println("work节点和db节点服务启动后启动Master"+port)
+    log.info("work节点和db节点服务启动后启动Master"+port)
     Cluster(calcSystem) registerOnMemberUp {
-      println("Master节点服务启动成功"+port)
+      log.info("Master节点服务启动成功"+port)
 
 
       calcSystem.actorOf(ClusterSingletonManager.props(
@@ -143,7 +146,7 @@ object MasterSingleton{
       val monitorFlag=prop.getProperty("monitor.service")
       monitorFlag match {
         case "true" => calcSystem.actorOf(Props[MetricsListener], name = "metricsListener")
-        case msg@_ => println(msg)
+        case msg@_ => log.info("是否启动指标监视==》"+msg)
       }
 
     }

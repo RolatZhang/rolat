@@ -8,6 +8,7 @@ import akka.routing.{FromConfig, RoundRobinPool}
 import com.sgcc.sgd5000.hisdata.HisViewAcq
 import com.sgcc.sgd5000.meas.Meters
 import com.typesafe.config.ConfigFactory
+import org.apache.commons.logging.LogFactory
 import rolat.service.scala.backend.MetricsListener
 import rolat.service.scala.message.Messages.{RequestMsg, ResponseMsg, Result}
 
@@ -22,9 +23,10 @@ object WorkActor {
   * 计算支撑
   */
 class WorkActor(workNum: Int,dbActorRef:ActorRef) extends Actor{
+  val log=LogFactory.getLog(classOf[WorkActor])
 
   override def preRestart(reason: Throwable, message: Option[Any]): Unit = {
-    println(s"Restarting calculator: ${reason.getMessage}")
+    log.info(s"Restarting calculator: ${reason.getMessage}")
     super.preRestart(reason, message)
   }
   val hisViewAcqRouter: ActorRef =
@@ -39,6 +41,8 @@ class WorkActor(workNum: Int,dbActorRef:ActorRef) extends Actor{
     case requestMsg:RequestMsg =>{
       requestMsg.id match {
         case "processHisViewAcq" =>{
+          println(s"${self}准备处理processHisViewAcq")
+          log.info(s"${self}准备处理processHisViewAcq")
           dbActorRef ! RequestMsg("getHisViewAcqList",requestMsg.request)
         }
       }
@@ -49,14 +53,16 @@ class WorkActor(workNum: Int,dbActorRef:ActorRef) extends Actor{
           hisViewAcqRouter ! RequestMsg("processHisViewAcqList",responseMsg.response)
         }
         case "processHisViewAcqList" =>{
+          log.info(s"${self}processHisViewAcqList处理完毕，准备保存")
           dbActorRef ! ResponseMsg("saveHisViewAcqList",responseMsg.response)
+
         }
       }
 
     }
   }
   def processMeters(meters:Meters): Unit ={
-    println(s"${self}收到===========${meters.getMeterName}")
+    log.info(s"${self}收到===========${meters.getMeterName}")
         sender() ! Result(1,"成功收到了"+meters.getMeterName+"耗时",System.currentTimeMillis())
 
   }
@@ -91,7 +97,10 @@ class WorkActorSuper(workNum: Int) extends Actor {
 
 
   override def receive: Receive = {
-    case msg@ _ => workActor.forward(msg)
+    case msg@ _ => {
+      println(msg+"work收到")
+      workActor.forward(msg)
+    }
   }
 
 }
@@ -100,6 +109,7 @@ class WorkActorSuper(workNum: Int) extends Actor {
   * 创建后台
   */
 object WorkActorer {
+  val log=LogFactory.getLog(classOf[WorkActor])
   val prop: Properties = new Properties
   val inputStream = WorkActorer.getClass.getClassLoader.getResourceAsStream("init.properties")
   prop.load(inputStream)
@@ -112,24 +122,13 @@ object WorkActorer {
       .withFallback(ConfigFactory.load("worker"))
     val calcSystem = ActorSystem("calcClusterSystem",config)
 
-
     calcSystem.actorOf(WorkActor.propsWorkActorSuper(num.toInt), "workActorSuper")
-    /*val workers=calcSystem.actorOf(WorkActor.propsWorkActorSuper.withDispatcher("work-dispatcher").
-      withRouter(new BalancingPool(num.toInt)), "workActorer")*/
-
-
-
-
-
     val monitorFlag=prop.getProperty("monitor.service")
+
     monitorFlag match {
       case "true" => calcSystem.actorOf(Props[MetricsListener], name = "metricsListener")
-      case msg@_ => println(msg)
+      case msg@_ => log.info("是否启动指标监视==》"+msg)
     }
-
-
-
-
 
 
 

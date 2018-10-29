@@ -1,7 +1,6 @@
 package rolat.service.scala.message
 
 import java.sql.Timestamp
-
 import akka.routing.ConsistentHashingRouter.ConsistentHashable
 import com.sgcc.sgd5000.meas.Meters
 
